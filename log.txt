@@ -1,0 +1,11 @@
+00:02:46 - executor - WARNING - start_polling: 329 - Goodbye!
+00:03:05 - executor - WARNING - start_polling: 329 - Goodbye!
+00:03:29 - executor - WARNING - start_polling: 329 - Goodbye!
+00:03:35 - commands - ERROR - start: 12 - name 'asfasdf' is not defined
+00:03:52 - executor - WARNING - start_polling: 329 - Goodbye!
+00:03:58 - commands - ERROR - log: 10 - name 'asd' is not defined
+00:04:53 - executor - WARNING - start_polling: 329 - Goodbye!
+00:05:05 - executor - WARNING - start_polling: 329 - Goodbye!
+00:05:24 - executor - WARNING - start_polling: 329 - Goodbye!
+00:05:42 - commands - ERROR - log: 10 - name 'asd' is not defined
+00:08:51 - commands - ERROR - log: 19 - start() missing 1 required positional argument: 'message'
