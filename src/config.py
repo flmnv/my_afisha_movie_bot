@@ -1,6 +1,8 @@
 import configparser
+import json
 import logging
 import os.path
+from types import SimpleNamespace
 
 from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -12,35 +14,58 @@ logging.basicConfig(
     level=logging.ERROR,
     filename='log.txt',
     format='%(asctime)s - %(module)s - %(levelname)s - %(funcName)s: %(lineno)d - %(message)s',
-    datefmt='%H:%M:%S'
+    datefmt='%Y-%m-%d %H:%M:%S'
 )
 
 bot = None
 storage = None
 dp = None
 
-config = configparser.ConfigParser()
+ini = configparser.ConfigParser()
+text = None
 
 
+def logerror(func):
+    def log(*args):
+        try:
+            func(*args)
+        except BaseException as e:
+            logging.error(e)
+
+    return log
+
+
+@logerror
 def _load_config():
     if os.path.isfile('config.ini'):
-        config.read('config.ini')
+        ini.read('config.ini')
     else:
         with open('config.ini', 'w', encoding='utf-8') as config_file:
             config_file.write(const.CONFIG)
 
 
+@logerror
+def _load_json():
+    global text
+
+    with open('json\\text.json', 'r', encoding='utf-8') as json_file:
+        text = json.load(json_file, object_hook=lambda d: SimpleNamespace(**d))
+
+
+@logerror
 def _create_bot():
     global bot, storage, dp
 
-    bot = Bot(token=config['TELEGRAM_BOT']['token'], parse_mode='html')
+    bot = Bot(token=ini['API_TELEGRAM']['token'], parse_mode='html')
     storage = MemoryStorage()
     dp = Dispatcher(bot=bot, storage=storage)
 
 
+@logerror
 def startup():
-    try:
-        _load_config()
-        _create_bot()
-    except BaseException as e:
-        logging.error(e)
+    _load_config()
+    _load_json()
+    _create_bot()
+
+
+startup()
