@@ -1,3 +1,6 @@
+#  Copyright (c) Vladislav Filimonov <vladislav.flmnv@yandex.ru>, 2023.
+#  Last modified: 10.03.2023, 00:39.
+
 import configparser
 import json
 import logging

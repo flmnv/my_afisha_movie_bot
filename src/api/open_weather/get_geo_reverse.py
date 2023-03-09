@@ -1,3 +1,6 @@
+#  Copyright (c) Vladislav Filimonov <vladislav.flmnv@yandex.ru>, 2023.
+#  Last modified: 10.03.2023, 01:17.
+
 from src.api.open_weather.base_request import BaseRequest
 
 LIMIT = 5
