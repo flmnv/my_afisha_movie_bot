@@ -1,5 +1,5 @@
 #  Copyright (c) Vladislav Filimonov <vladislav.flmnv@yandex.ru>, 2023.
-#  Last modified: 10.03.2023, 01:21.
+#  Last modified: 11.03.2023, 01:12.
 
 import aiohttp
 
@@ -11,7 +11,7 @@ class BaseRequest:
     def __init__(self):
         self.host = config.ini['API_OPEN_WEATHER']['host']
         self.endpoint = config.ini['API_OPEN_WEATHER']['endpoint']
-        self.api_key = config.ini['API_OPEN_WEATHER']['apiKey']
+        self.key = config.ini['API_OPEN_WEATHER']['key']
 
         self.response = None
         self.json = None

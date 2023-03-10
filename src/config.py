@@ -1,10 +1,11 @@
 #  Copyright (c) Vladislav Filimonov <vladislav.flmnv@yandex.ru>, 2023.
-#  Last modified: 10.03.2023, 00:39.
+#  Last modified: 11.03.2023, 01:12.
 
 import configparser
 import json
 import logging
 import os.path
+import typing
 from types import SimpleNamespace
 
 from aiogram import Bot
@@ -20,9 +21,9 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-bot = None
-storage = None
-dp = None
+bot: typing.Union[Bot, None] = None
+storage: typing.Union[MemoryStorage, None] = None
+dp: typing.Union[Dispatcher, None] = None
 
 ini = configparser.ConfigParser()
 text = None
@@ -34,6 +35,7 @@ def logerror(func):
             func(*args)
         except BaseException as e:
             logging.error(e)
+            exit(1)
 
     return log
 
@@ -64,11 +66,7 @@ def _create_bot():
     dp = Dispatcher(bot=bot, storage=storage)
 
 
-@logerror
 def startup():
     _load_config()
     _load_json()
     _create_bot()
-
-
-startup()
