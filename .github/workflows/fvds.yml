@@ -24,7 +24,5 @@ jobs:
       # Deploy
       - run: rsync --archive --compress --progress . ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:${{ vars.SERVER_PATH }}
       
-      - run: pwd
-      
       # Set up config file
-      - run: echo "${{ vars.CONFIG_INI }}" > "${{ vars.SERVER_PATH }}/config.ini"
+      - run: echo "${{ vars.CONFIG_INI }}" > "${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:${{ vars.SERVER_PATH }}/config.ini"
