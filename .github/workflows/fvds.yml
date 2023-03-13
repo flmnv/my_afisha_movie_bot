@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_dispatch
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Install ssh key
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2.3.1
+        with:
+          key: "${{ secrets.OPENSSH_PRIVATE_KEY }}"
+          known_hosts: "just-a-placeholder-so-we-dont-get-errors"
+          
+      - name: Generate auth hosts
+        run: ssh-keyscan -H ${{ vars.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      # Deploy
+      - run: rsync --archive --compress --progress . ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:${{ vars.SERVER_PATH }}
