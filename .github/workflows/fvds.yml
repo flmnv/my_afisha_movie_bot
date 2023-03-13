@@ -23,3 +23,6 @@ jobs:
 
       # Deploy
       - run: rsync --archive --compress --progress . ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:${{ vars.SERVER_PATH }}
+      
+      # Set up config file
+      - run: echo "${{ vars.CONFIG_INI }}" > "${{ vars.SERVER_PATH }}/config.ini"
