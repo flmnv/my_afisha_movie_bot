@@ -1,11 +1,12 @@
 #  Copyright (c) Vladislav Filimonov <vladislav.flmnv@yandex.ru>, 2023.
-#  Last modified: 11.03.2023, 01:12.
+#  Last modified: 14.03.2023, 23:24.
 
 import configparser
 import json
 import logging
 import os.path
 import typing
+from pathlib import Path
 from types import SimpleNamespace
 
 from aiogram import Bot
@@ -53,7 +54,7 @@ def _load_config():
 def _load_json():
     global text
 
-    with open('json\\text.json', 'r', encoding='utf-8') as json_file:
+    with open(Path('json', 'text.json'), 'r', encoding='utf-8') as json_file:
         text = json.load(json_file, object_hook=lambda d: SimpleNamespace(**d))
 
 
