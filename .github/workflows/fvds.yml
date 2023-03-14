@@ -6,7 +6,7 @@ on:
 jobs:
 
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: "${{ vars.OS_NAME }}"
 
     steps:
       - uses: actions/checkout@v3
@@ -21,8 +21,11 @@ jobs:
       - name: Generate auth hosts
         run: ssh-keyscan -H ${{ vars.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      # Deploy
+      - name: Update project files
       - run: rsync --archive --compress --progress . ${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}:${{ vars.SERVER_PATH }}
-      
-      # Set up config file
+
+      - name: Create config.ini
       - run: ssh "${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}" "echo \"${{ vars.CONFIG_INI }}\" > ${{ vars.SERVER_PATH }}/config.ini"
+
+      - name: Restart the service
+      - run: ssh "${{ vars.SERVER_USER }}@${{ vars.SERVER_HOST }}" "systemctl restart ${{ vars.SERVICE_NAME }}"
